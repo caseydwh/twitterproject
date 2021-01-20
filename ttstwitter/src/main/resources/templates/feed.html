@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<head th:insert="fragments/stylesheetReplace :: head">
+    <title>Feed</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+<div class="container">
+    <div th:replace="fragments/navbar"></div>
+<div class="container" th:if="${!tweetList.isEmpty()}">
+    <h2>Tweets</h2>
+    <div th:each="tweet:${tweetList}">
+        <div class="container">
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <a th:href="@{/users/} + ${tweet.user.username}"><h5>@<span th:text="${tweet.user.username}">
+                   <span th:text="${#dates.format(tweet.createdAt, 'M/d/yy')}"></span></span></h5></a>
+        <p th:utext="${tweet.message}"></p>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+    <div class="container" th:unless="${tweetList!=null and !tweetList.isEmpty()}">>
+        <h2> Tweets - Sorry, no tweets available. </h2>
+    </div>
+</div>
+</body>
+</html>

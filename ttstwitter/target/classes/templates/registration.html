@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<head th:insert="fragments/stylesheetReplace :: head">
+    <title>Registration</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+<div class="container">
+    <div th:replace="fragments/navbar"></div>
+<div class="container">
+    <h1> Registration </h1>
+    <div class="panel panel-default" sec:authorize="isAnonymous()" th:unless="${success}">
+        <div class="panel-body">
+            <form th:action="@{/signup}" th:object="${user}" method="post" autocomplete="off" >
+        <div class="form-group">
+            <label th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}" class="validation-message"></label>
+            <input type="text" th:field="*{firstName}" placeholder="First Name" class="form-control"/>
+        </div>
+        <div class="form-group">
+            <label th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" class="validation-message"></label>
+            <input type="text" th:field="*{lastName}" placeholder="Last Name" class="form-control"/>
+        </div>
+        <div class="form-group">
+            <label th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="validation-message"></label>
+            <input type="text" th:field="*{username}" placeholder="Username" class="form-control"/>
+        </div>
+        <div class="form-group">
+            <input type="text" th:field="*{email}" placeholder="Email" class="form-control"/>
+            <label th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="validation-message"></label>
+        </div>
+        <div class="form-group">
+            <input type="password" th:field="*{password}" placeholder="Password" class="form-control"/>
+            <label th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="validation-message"></label>
+        </div>
+        <div class="form-group">
+            <button class="btn btn-md btn-success btn-block" name="Submit" value="Submit" type="Submit" th:text="Submit"></button>
+        </div>
+    </form>
+        </div>
+    </div>
+            <div class="panel panel-default" th:if="${success}">
+                <h1> You did it! Success! </h1>
+                <button class="btn btn-md btn-success btn-block" name="Submit" value="Login" type="Submit">Log in</button>
+            </div>
+        </div>
+        <p sec:authorize="isAuthenticated()">
+            You cannot create an user account because you are already logged in.
+        </p>
+    </div>
+
+</body>
+</html>
